@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //connection to db
+console.log(dbConfig.DB_STRING)
 mongoose.connect(dbConfig.DB_STRING);
 const db = mongoose.connection;
 db.on("error", () => {
