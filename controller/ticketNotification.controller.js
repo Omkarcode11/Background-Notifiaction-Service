@@ -25,15 +25,15 @@ exports.acceptNotification = async (req, res) => {
   } catch (err) {
     return res
       .status(500)
-      .send({ err, message: "Some internal error Occurred" });
+      .send({ message: "Some internal error Occurred" });
   }
 };
 
 exports.getNotification = async (req, res) => {
   try {
-    let ticket = await Notification.findById(req.params.id);
-    if (ticket) {
-      return res.status(200).send(ticket);
+    let notification = await Notification.findById(req.params.id);
+    if (notification) {
+      return res.status(200).send(notification);
     } else {
       return res.status(200).send("ticket not found");
     }
@@ -53,18 +53,16 @@ exports.sendEmail = async (req, res) => {
         subject: notification.subject,
         text: notification.content,
       };
-      let status = await emailService.sendMail(emailObj, async(err,info)=>{
-        if(err){
-          console.log(err)
-        }else{
-          console.log(info)
-        }
-      });
+      let status = await emailService.sendMail(emailObj);
       console.log(status);
       return res.status(200).send(status);
+    } else if (notification && notification.status != 'NOT_SEND') {
+      return res.status(200).send("Email Already send")
+    } else {
+      return res.status(404).send('Notification not Found')
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).send(err);
+    return res.status(500).send('internal Error');
   }
 };
