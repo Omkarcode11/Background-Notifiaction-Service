@@ -2,11 +2,13 @@ let express = require("express");
 let app = express();
 let dbConfig = require("./config/db.config");
 let mongoose = require("mongoose");
+let cors = require('cors')
 require('dotenv').config()
 
 const { PORT } = require("./config/server.config");
 const { backgroundService } = require("./cron/emailSenderBackgroundService");
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
