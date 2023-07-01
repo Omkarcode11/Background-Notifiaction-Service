@@ -19,9 +19,3 @@ exports.validateNotification = (req, res, next) => {
 
 
 
-exports.validateNotificationId = (req, res, next) => {
-    if (objectId.isValid(req.params.id)) {
-        next()
-    }
-    return res.status(400).send("Invalid notification Id")
-}

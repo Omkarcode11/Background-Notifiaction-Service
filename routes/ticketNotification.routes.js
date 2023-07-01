@@ -4,5 +4,5 @@ const { validateNotification, validateNotificationId } = require('../middlewares
 module.exports = function (app) {
     app.post('/notificationService/api/v1/notifications', validateNotification, notificationController.acceptNotification)
     app.get("/notificationService/api/v1/notifications/:id", validateNotificationId, notificationController.getNotification)
-    app.get("/notificationService/api/v1/notifications/send/email/:id", validateNotificationId, notificationController.sendEmail)
+    app.post("/notificationService/api/v1/notifications/send/email", notificationController.sendEmail)
 }

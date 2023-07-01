@@ -44,7 +44,16 @@ exports.getNotification = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
   try {
-    let notification = await Notification.findById(req.params.id);
+
+    const notificationObj = {
+      ticketId: req.body.ticketId,
+      subject: req.body.subject,
+      content: req.body.content,
+      recipientEmails: req.body.recipientEmails,
+      requester: req.body.requester,
+    }
+
+    let notification = await Notification.create(notificationObj)
 
     if (notification && notification.status == "NOT_SEND") {
       let emailObj = {
